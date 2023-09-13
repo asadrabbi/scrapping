@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+
+<h1>Edit: {{item.title}}</h1>
+<form method="POST" action="{{path('blog_update', {slug: item.slug})}}">
+    <input type="hidden" name="token" value="{{ csrf_token('update-item') }}" />
+    <input type="hidden" name="_method" value="PUT" />
+
+    <p class="form-control">
+        <label for="title">Title</label>
+        <input id="title" name="title" value="{{ title ?? item.title}}">
+
+        {{ 
+            include('partials/_error_field.html.twig', 
+                        { errors, field: 'title'}, 
+                        with_context = false
+                    ) 
+        }}
+    </p>
+
+    <p class="form-control">
+        <label for="body">Text</label>
+        <textarea id="body" name="body" cols="45" rows="4">{{body ?? item.body}}</textarea>
+        {{ 
+            include('partials/_error_field.html.twig',
+                        {errors, field: 'body' }, 
+                        with_context = false
+                    ) 
+        }}
+    </p>
+
+    <button>
+        Update Post
+    </button>
+</form>
+{% endblock %}

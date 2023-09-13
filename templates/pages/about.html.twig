@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+<h1>About</h1>
+
+<h3>
+    Project: News complete CRUD with Symfony 6.2.x (PHP 8.1 and MySQL 8)
+</h3>
+
+<p style="margin: 1rem 0;">This is a simple blog Website with few feature
+</p>
+
+<ul style="margin: 1rem;">
+    <li>
+        CRUD operations
+    </li>
+    <li>
+        Entity and Repository
+    </li>
+    <li>
+        Migrations
+    </li>
+    <li>
+        Without symfony forms
+    </li>
+    <li>
+        taking advantages of layout system.
+    </li>
+    <li>
+        follow the restful methods and conventions
+    </li>
+
+    <li>
+        implemented CSRF token
+    </li>
+
+    <li>
+        simple version Blog API: <a href="{{path('blog_api_index')}}">Blog API</a>
+    </li>
+</ul>
+{% endblock %}

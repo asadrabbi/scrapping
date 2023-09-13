@@ -1,0 +1,66 @@
+version: "3.9"
+services:
+  proxy-server:
+    image: jwilder/nginx-proxy
+    container_name: proxy-server
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    restart: always
+    networks:
+      - scrapping_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - target: 6379
+        published: 6379
+    volumes:
+      - redis_data:/data
+    restart: always
+    networks:
+      - scrapping_network
+
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql-database-8
+    ports:
+      - "3336:3306"
+    volumes:
+      - scrapping_mysql_db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    restart: always
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: scrapping
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - scrapping_network
+
+  rabbitmq:
+      image: rabbitmq:3-management-alpine
+      container_name: rabbitmq
+      ports:
+          - 5672:5672
+          - 15672:15672
+      volumes:
+          - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+          - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      networks:
+          - scrapping_network
+
+volumes:
+  scrapping_mysql_db:
+    driver: local
+  redis_data:
+
+networks:
+  scrapping_network:
+    name: scrapping_network

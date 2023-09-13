@@ -1,0 +1,5 @@
+{% if errors|length > 0 and errors[field] is defined %}
+{% for error in errors[field] %}
+<small style="color:brown;">{{error}}</small>
+{% endfor %}
+{% endif %}

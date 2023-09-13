@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+<h1>{{item.title}}</h1>
+<p>
+    {{item.body}}
+</p>
+
+<section style="margin-top:2rem;display: flex; gap: 10rem;">
+    <a href="{{path('blog_edit', {slug:item.slug})}}">Edit</a>
+    <form action="{{path('blog_delete', {id:item.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}" />
+        <input type="hidden" name="_method" value="DELETE" />
+        <button>Delete</button>
+    </form>
+</section>
+
+{% endblock %}

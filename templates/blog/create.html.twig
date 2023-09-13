@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body %}
+
+<h1>Create Blog Post</h1>
+<form method="post" action="{{path('blog_store')}}">
+    <input type="hidden" name="token" value="{{ csrf_token('create-item') }}" />
+    <p class="form-control">
+        <label for="title">Title</label>
+        <input id="title" name="title" value="{{ title ?? ''}}">
+
+        {{ 
+            include('partials/_error_field.html.twig', 
+                        { errors, field: 'title'}, 
+                        with_context = false
+                    ) 
+        }}
+    </p>
+
+    <p class="form-control">
+        <label for="body">Text</label>
+        <textarea id="body" name="body" cols="45" rows="4">{{body ?? ''}}</textarea>
+        {{ 
+            include('partials/_error_field.html.twig',
+                        {errors, field: 'body' }, 
+                        with_context = false
+                    ) 
+        }}
+    </p>
+
+    <button>
+        Create Post
+    </button>
+</form>
+{% endblock %}

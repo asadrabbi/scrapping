@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+{% block css %}
+<style>
+    article,
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+
+    article {
+        gap: 0.5rem;
+    }
+</style>
+{% endblock  %}
+
+{% block body %}
+{% if all|length == 0 %}
+<p>NO Posts</p>
+{% endif %}
+{% for item in all %}
+<h3>
+    {{item.title}}
+</h3>
+
+<p class="main">
+    {{item.body}}
+</p>
+
+<a href="{{path('blog_show', {slug:item.slug})}}">
+    View article
+</a>
+{% endfor %}
+
+{% endblock %}

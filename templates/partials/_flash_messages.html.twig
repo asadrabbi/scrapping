@@ -1,0 +1,11 @@
+{% for message in app.flashes('warning') %}
+<section style="background-color: rgb(107, 107, 9); color: #fff; padding:1rem; align-self:normal">
+    {{ message }}
+</section>
+{% endfor %}
+
+{% for message in app.flashes('success') %}
+<section style="background-color: rgb(5, 171, 41); color: #fff; padding:1rem; align-self:normal">
+    {{ message }}
+</section>
+{% endfor %}
