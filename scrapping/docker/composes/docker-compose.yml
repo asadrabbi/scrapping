@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  data-scrapper-service:
+    container_name: ${CONTAINER_NAME}
+    image: ${CONTAINER_NAME}
+    env_file: ../../.env
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    command: bash -c "npm install && nodemon"
+    volumes:
+      - ../../:/app
+    ports:
+      - ${EXPOSED_PORT}:${APP_PORT}
+    networks:
+      - scrapping-network
+
+networks:
+  scrapping-network:
+    external:
+      name: ${EXTERNAL_NETWORK}
