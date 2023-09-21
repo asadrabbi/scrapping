@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,18 +12,20 @@ class CompanyProfileController extends AbstractController
     #[Route('/company', name: 'company_list')]
     public function index(): Response
     {
-        $puppeteerServiceUrl = 'http://data-scrapper-service:8686';
+        $puppeteerApiUrl = 'http://data-scrapper-service:8686/scrape';
 
         // Create an HTTP client
-        $client = HttpClient::create();
+        $httpClient = HttpClient::create();
 
-        // Send a GET request to the Puppeteer service
-        $response = $client->request('GET', $puppeteerServiceUrl);
+        try {
+            $response = $httpClient->request('GET', $puppeteerApiUrl);
+            $data = $response->toArray();
+            $title = $data['title'];
 
-        // Get the response content
-        $content = $response->getContent();
-
-        dd($content);
+            return new Response('Company title: ' . $title);
+        } catch (\Exception $e) {
+            return new Response('Error: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
