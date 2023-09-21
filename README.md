@@ -7,6 +7,20 @@
 <li> <code>cd docker</code></li>
 <li> <code>bin/deploy local</code></li>
 <li> <code>cd ../application</code></li>
+<li> <code>touch .env</code></li>
+<li> set env
+<br>
+<br>
+VIRTUAL_HOST_DOMAIN=scrapping.test<br>
+DOCKER_HOST_ADDR=172.17.0.1<br>
+VIRTUAL_HOST_DOCKER_HOST=dockerhost<br>
+VIRTUAL_HOST_LOCALHOST=localhost<br>
+CONTAINER_NAME=scrapping-service<br>
+APP_SECRET=<br>
+DATABASE_URL=mysql://root:root_password@mysql-database-8:3306/scrapping
+<br>
+<br>
+</li>
 <li> <code>script/deploy.sh local</code></li>
 <li> After Start the project enter the container <code>docker exec -it scrapping-service bash</code></li>
 <li> <code>composer install</code></li>
