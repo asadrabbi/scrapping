@@ -1,9 +1,8 @@
 version: "3.8"
 services:
   data-scrapper-service:
-    container_name: ${CONTAINER_NAME}
-    image: ${CONTAINER_NAME}
-    env_file: ../../.env
+    container_name: data-scrapper-service
+    image: data-scrapper-service
     build:
       context: ../
       dockerfile: Dockerfile
@@ -11,11 +10,11 @@ services:
     volumes:
       - ../../:/app
     ports:
-      - ${EXPOSED_PORT}:${APP_PORT}
+      - 8686:8686
     networks:
       - scrapping-network
 
 networks:
   scrapping-network:
     external:
-      name: ${EXTERNAL_NETWORK}
+      name: scrapping-network
